@@ -23,8 +23,7 @@ spec:
     openapi: 3.0.0
     info:
       title: Air Insomnia API
-      description: A simple API for retrieving information about the airports served
-        by Air Insomnia.
+      description: Air Insomnia - Sleep tight. Serving all your airline and Insomnia needs. 
       version: 1.1.0
       contact:
         name: Air Insomnia Developer Support
