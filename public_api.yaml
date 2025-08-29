@@ -1,0 +1,123 @@
+type: spec.insomnia.rest/5.0
+name: Public Air Insomnia API
+meta:
+  id: wrk_3082d1d53ac041acb5759aabbd3fa693
+  created: 1756496214873
+  modified: 1756496214873
+  description: ""
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_3cc00d8c4fb71dde501c2b6384abead765eef10f
+    created: 1756496214892
+    modified: 1756496214892
+environments:
+  name: Base Environment
+  meta:
+    id: env_3cc00d8c4fb71dde501c2b6384abead765eef10f
+    created: 1756496214892
+    modified: 1756496214892
+    isPrivate: false
+spec:
+  contents:
+    openapi: 3.0.0
+    info:
+      title: Air Insomnia API
+      description: A simple API for retrieving information about the airports served
+        by Air Insomnia.
+      version: 1.1.0
+      contact:
+        name: Air Insomnia Developer Support
+        email: support@airinsomnia.example
+        url: https://airinsomnia.example
+        x-phone: +1-800-555-INSOMNIA
+    servers:
+      - url: https://api.airinsomnia.com/v1
+    tags:
+      - name: Airports
+        description: Endpoints for retrieving information about airports.
+    paths:
+      /airports:
+        get:
+          tags:
+            - Airports
+          operationId: listAirports
+          summary: Get list of airports served
+          description: Returns a list of airports currently served by Air Insomnia.
+          responses:
+            "200":
+              description: A list of airports
+              content:
+                application/json:
+                  schema:
+                    type: object
+                    properties:
+                      airports:
+                        type: array
+                        description: List of served airports
+                        items:
+                          $ref: "#/components/schemas/Airport"
+                    example:
+                      airports:
+                        - code: SFO
+                          name: San Francisco International Airport
+                        - code: JFK
+                          name: John F. Kennedy International Airport
+                        - code: LAX
+                          name: Los Angeles International Airport
+                        - code: ORD
+                          name: Chicago O'Hare International Airport
+                        - code: DFW
+      /airports/{code}:
+        get:
+          tags:
+            - Airports
+          operationId: getAirportByCode
+          summary: Get details for a specific airport
+          description: Returns details about a single airport served by Air Insomnia.
+          parameters:
+            - name: code
+              in: path
+              required: true
+              description: The IATA airport code.
+              schema:
+                type: string
+                example: SFO
+          responses:
+            "200":
+              description: Details for the specified airport
+              content:
+                application/json:
+                  schema:
+                    $ref: "#/components/schemas/Airport"
+                  example:
+                    code: SFO
+                    name: San Francisco International Airport
+            "404":
+              description: Airport not found
+              content:
+                application/json:
+                  schema:
+                    type: object
+                    properties:
+                      error:
+                        type: string
+                        example: Airport with code XYZ not found.
+    components:
+      schemas:
+        Airport:
+          type: object
+          required:
+            - code
+          properties:
+            code:
+              type: string
+              description: The IATA airport code (e.g., "SFO").
+            name:
+              type: string
+              nullable: true
+              description: The optional name of the airport.
+  meta:
+    id: spc_6b845deaa09c495981f4437f165a6c31
+    created: 1756496214890
+    modified: 1756496479840
